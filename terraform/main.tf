@@ -17,8 +17,11 @@ provider "keycloak" {
 
 # Realm
 resource "keycloak_realm" "pmpk" {
-  realm   = var.realm_name
-  enabled = true
+  realm                     = var.realm_name
+  enabled                   = true
+  registration_allowed      = true
+  login_with_email_allowed  = true
+  reset_password_allowed    = true
 }
 
 # Grupy
@@ -90,6 +93,7 @@ resource "keycloak_openid_client" "pmpk_app" {
   access_type                  = "CONFIDENTIAL"
   standard_flow_enabled        = true
   direct_access_grants_enabled = true
+  client_secret = "cc581549c765443fb35831c4283f61c5"
 
   valid_redirect_uris = ["*"]
 }
