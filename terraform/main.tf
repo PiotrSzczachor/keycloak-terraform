@@ -30,10 +30,21 @@ resource "keycloak_group" "app_admin" {
   name     = "app-admin"
 }
 
-resource "keycloak_group" "app_user" {
+resource "keycloak_group" "app_volunteer" {
   realm_id = keycloak_realm.pmpk.id
-  name     = "app-user"
+  name     = "app-volunteer"
 }
+
+resource "keycloak_group" "app_organization" {
+  realm_id = keycloak_realm.pmpk.id
+  name     = "app-organization"
+}
+
+resource "keycloak_group" "app_coordinator" {
+  realm_id = keycloak_realm.pmpk.id
+  name     = "app-coordinator"
+}
+
 
 # Role
 resource "keycloak_role" "app_access" {
@@ -48,9 +59,21 @@ resource "keycloak_group_roles" "app_admin_roles" {
   role_ids = [keycloak_role.app_access.id]
 }
 
-resource "keycloak_group_roles" "app_user_roles" {
+resource "keycloak_group_roles" "app_volunteer_roles" {
   realm_id = keycloak_realm.pmpk.id
-  group_id = keycloak_group.app_user.id
+  group_id = keycloak_group.app_volunteer.id
+  role_ids = [keycloak_role.app_access.id]
+}
+
+resource "keycloak_group_roles" "app_organization_roles" {
+  realm_id = keycloak_realm.pmpk.id
+  group_id = keycloak_group.app_organization.id
+  role_ids = [keycloak_role.app_access.id]
+}
+
+resource "keycloak_group_roles" "app_coordinator_roles" {
+  realm_id = keycloak_realm.pmpk.id
+  group_id = keycloak_group.app_coordinator.id
   role_ids = [keycloak_role.app_access.id]
 }
 
